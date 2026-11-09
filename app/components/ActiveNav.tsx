@@ -43,7 +43,7 @@ export default function ActiveNav() {
 
     // At the very bottom the last section can sit above the observed band, so pin it.
     const onScroll = () => {
-      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) setActive('contact');
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) setActive('work');
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     setActive('top');

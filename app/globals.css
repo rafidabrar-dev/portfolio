@@ -340,3 +340,12 @@ a.cred:hover .cred-link { text-decoration-thickness: 2px; }
 .news-card:hover .news-title { text-decoration: underline; text-underline-offset: 0.16em; }
 .news-meta { font-size: var(--text-sm); color: var(--color-muted); }
 @media (max-width: 60rem) { .news-list { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Divider: end of the on-page sections, start of the separate pages ---------- */
+:root { --color-bar: oklch(99.5% 0.004 92); }
+.side-sep { height: 3px; margin: var(--space-sm) var(--space-md); background: var(--color-bar); border-radius: var(--radius-pill); list-style: none; }
+.dock-sep { flex: none; width: 3px; align-self: stretch; margin-block: var(--space-xs); background: var(--color-bar); border-radius: var(--radius-pill); }
+
+/* Mobile pill: each item is at least as wide as its label, so the yellow highlight always contains the text. */
+.dock a { flex: 1 1 auto; min-width: max-content; padding-inline: var(--space-2xs); white-space: nowrap; }
+@media (max-width: 22.5rem) { .dock a { font-size: 0.6875rem; } .dock { gap: var(--space-3xs); } }

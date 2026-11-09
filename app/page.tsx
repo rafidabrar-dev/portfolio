@@ -1,6 +1,5 @@
 import Image from 'next/image';
-import Link from 'next/link';
-import { about, cfaCredentialUrl, contact, credentials, education, experience, focus, hero, olympiad, projects, site } from './data';
+import { about, cfaCredentialUrl, experience, focus, hero, olympiad, projects, site } from './data';
 import CvButton from './components/CvButton';
 import Timeline from './components/Timeline';
 import VideoEmbed from './components/VideoEmbed';
@@ -217,62 +216,6 @@ export default function Home() {
               </li>
             ))}
           </ol>
-        </div>
-      </section>
-
-      {/* EDUCATION (summary; the full page is /education) */}
-      <section className="section" id="education">
-        <div className="container">
-          <h2 className="visually-hidden">Education</h2>
-          <div className="edu">
-            <Timeline items={education} className="edu-timeline" />
-            <div className="creds">
-              {credentials.map((c) => {
-                const body = (
-                  <>
-                    <p className="cell-note">{c.note}</p>
-                    <h3>{c.title}</h3>
-                    {c.url ? <span className="cred-link">Verify the credential</span> : null}
-                  </>
-                );
-                return c.url ? (
-                  <a key={c.title} className={`cred cred--${c.tone}`} href={c.url} target="_blank" rel="noopener noreferrer">
-                    {body}
-                  </a>
-                ) : (
-                  <div key={c.title} className={`cred cred--${c.tone}`}>
-                    {body}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          <div className="actions section-link">
-            <Link className="btn btn--line" href="/education">
-              View education details
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* CONTACT */}
-      <section className="section section--close" id="contact">
-        <div className="container">
-          <div className="contact">
-            <h2>{contact.heading}</h2>
-            <p className="lead">{contact.lead}</p>
-            <a className="mail" href={`mailto:${site.email}`}>
-              {site.email}
-            </a>
-            <div className="actions">
-              <Link className="btn btn--line" href="/contact">
-                Contact page
-              </Link>
-              <a className="btn btn--line" href={site.linkedin} target="_blank" rel="noopener noreferrer">
-                Open LinkedIn
-              </a>
-            </div>
-          </div>
         </div>
       </section>
     </>
