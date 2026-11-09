@@ -1,18 +1,65 @@
 import Image from 'next/image';
-import { about, contact, credentials, education, experience, focus, hero, nav, projects, site } from './data';
+import Link from 'next/link';
+import { about, cfaCredentialUrl, contact, credentials, education, experience, focus, hero, olympiad, projects, site } from './data';
 import CvButton from './components/CvButton';
 import Timeline from './components/Timeline';
+import VideoEmbed from './components/VideoEmbed';
 
+// Structured data: a WebSite and a ProfilePage whose main entity is the Person.
+const personId = `${site.url}/#person`;
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: site.name,
-  url: site.url,
-  email: `mailto:${site.email}`,
-  jobTitle: 'Finance graduate and researcher',
-  address: { '@type': 'PostalAddress', addressLocality: 'Dhaka', addressCountry: 'BD' },
-  alumniOf: { '@type': 'CollegeOrUniversity', name: 'Bangladesh University of Professionals' },
-  sameAs: [site.linkedin],
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${site.url}/#website`,
+      url: site.url,
+      name: site.name,
+      description: site.description,
+      inLanguage: 'en',
+      publisher: { '@id': personId },
+    },
+    {
+      '@type': 'ProfilePage',
+      '@id': `${site.url}/#profile`,
+      url: site.url,
+      name: site.title,
+      isPartOf: { '@id': `${site.url}/#website` },
+      mainEntity: { '@id': personId },
+    },
+    {
+      '@type': 'Person',
+      '@id': personId,
+      name: site.name,
+      url: site.url,
+      image: `${site.url}/rafid_hero.webp`,
+      email: `mailto:${site.email}`,
+      description: site.description,
+      jobTitle: 'Finance graduate and researcher',
+      address: { '@type': 'PostalAddress', addressLocality: 'Dhaka', addressCountry: 'BD' },
+      knowsAbout: [
+        'Financial modeling',
+        'Corporate finance',
+        'Valuation',
+        'Econometrics',
+        'Financial inclusion',
+        'Private sector development',
+      ],
+      alumniOf: [
+        { '@type': 'CollegeOrUniversity', name: 'Bangladesh University of Professionals' },
+        { '@type': 'EducationalOrganization', name: 'Notre Dame College' },
+        { '@type': 'EducationalOrganization', name: 'Govt. Laboratory High School, Rajshahi' },
+      ],
+      hasCredential: {
+        '@type': 'EducationalOccupationalCredential',
+        name: 'Chartered Financial Analyst (CFA) Level I',
+        credentialCategory: 'Exam passed',
+        url: cfaCredentialUrl,
+      },
+      worksFor: { '@type': 'Organization', name: 'Bangladesh Economics Olympiad', url: 'https://ecolympbd.org' },
+      sameAs: [site.linkedin, site.facebook, olympiad.committeeUrl],
+    },
+  ],
 };
 
 export default function Home() {
@@ -76,6 +123,66 @@ export default function Home() {
         </div>
       </section>
 
+      {/* OLYMPIAD: two photographs, the committee listing and the BTV appearance */}
+      <section className="section" id="olympiad">
+        <div className="container">
+          <div className="head-split">
+            <h2>{olympiad.heading}</h2>
+            <div className="head-aside">
+              <p className="lead">{olympiad.lead}</p>
+              <a className="btn btn--line" href={olympiad.committeeUrl} target="_blank" rel="noopener noreferrer">
+                See the committee
+              </a>
+            </div>
+          </div>
+          <div className="oly-photos">
+            {olympiad.photos.map((p) => (
+              <figure key={p.src} className="oly-photo">
+                <div className="oly-frame">
+                  <Image
+                    src={p.src}
+                    alt={p.alt}
+                    width={p.width}
+                    height={p.height}
+                    sizes="(min-width: 960px) 45vw, 100vw"
+                  />
+                </div>
+                <figcaption>{p.caption}</figcaption>
+              </figure>
+            ))}
+          </div>
+          <div className="press">
+            <div className="press-copy">
+              <h3>{olympiad.press.heading}</h3>
+              <p>{olympiad.press.body}</p>
+              <a className="btn btn--ink" href={olympiad.press.url} target="_blank" rel="noopener noreferrer">
+                Open on Facebook
+              </a>
+            </div>
+            <VideoEmbed
+              url={olympiad.press.url}
+              title="Rafid Abrar on BTV for the Bangladesh Economics Olympiad"
+              label="Watch the BTV appearance"
+            />
+          </div>
+          <div className="news">
+            <h3>In the news</h3>
+            <ul className="news-list">
+              {olympiad.news.map((n) => (
+                <li key={n.url}>
+                  <a className="news-card" href={n.url} target="_blank" rel="noopener noreferrer">
+                    <span className="news-title">{n.title}</span>
+                    <span className="news-meta">
+                      {n.source}, {n.date}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
       {/* FOCUS */}
       <section className="section" id="focus">
         <div className="container focus">
@@ -113,20 +220,37 @@ export default function Home() {
         </div>
       </section>
 
-      {/* EDUCATION */}
+      {/* EDUCATION (summary; the full page is /education) */}
       <section className="section" id="education">
         <div className="container">
           <h2 className="visually-hidden">Education</h2>
           <div className="edu">
             <Timeline items={education} className="edu-timeline" />
             <div className="creds">
-              {credentials.map((c) => (
-                <div key={c.title} className={`cred cred--${c.tone}`}>
-                  <p className="cell-note">{c.note}</p>
-                  <h3>{c.title}</h3>
-                </div>
-              ))}
+              {credentials.map((c) => {
+                const body = (
+                  <>
+                    <p className="cell-note">{c.note}</p>
+                    <h3>{c.title}</h3>
+                    {c.url ? <span className="cred-link">Verify the credential</span> : null}
+                  </>
+                );
+                return c.url ? (
+                  <a key={c.title} className={`cred cred--${c.tone}`} href={c.url} target="_blank" rel="noopener noreferrer">
+                    {body}
+                  </a>
+                ) : (
+                  <div key={c.title} className={`cred cred--${c.tone}`}>
+                    {body}
+                  </div>
+                );
+              })}
             </div>
+          </div>
+          <div className="actions section-link">
+            <Link className="btn btn--line" href="/education">
+              View education details
+            </Link>
           </div>
         </div>
       </section>
@@ -141,6 +265,9 @@ export default function Home() {
               {site.email}
             </a>
             <div className="actions">
+              <Link className="btn btn--line" href="/contact">
+                Contact page
+              </Link>
               <a className="btn btn--line" href={site.linkedin} target="_blank" rel="noopener noreferrer">
                 Open LinkedIn
               </a>
@@ -148,42 +275,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      <footer className="foot">
-        <div className="foot-in">
-          <p className="foot-mark">{site.name}</p>
-          <div className="foot-col">
-            <h2 className="foot-h">Pages</h2>
-            <ul>
-              {nav
-                .filter((n) => ['experience', 'work', 'education', 'contact'].includes(n.id))
-                .map((n) => (
-                  <li key={n.id}>
-                    <a href={n.href}>{n.label}</a>
-                  </li>
-                ))}
-            </ul>
-          </div>
-          <div className="foot-col">
-            <h2 className="foot-h">Elsewhere</h2>
-            <ul>
-              <li>
-                <a href={`mailto:${site.email}`}>Email</a>
-              </li>
-              <li>
-                <a href={site.linkedin} target="_blank" rel="noopener noreferrer">
-                  LinkedIn
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div className="foot-col">
-            <h2 className="foot-h">Based in</h2>
-            <p>{site.location}</p>
-            <p className="foot-legal">&copy; {new Date().getFullYear()} {site.name}.</p>
-          </div>
-        </div>
-      </footer>
     </>
   );
 }

@@ -3,6 +3,8 @@
  * axes: light/grotesk-heavy/chromatic-yellow · posture: committed · contrast: pass · fold: pass · v2.0.0 */
 /* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 · weakest: S, the project rows could belong to any finance graduate; marked them as sample entries until real ones arrive */
 /* Hallmark · dismissed 23 · the user asked for a cream and yellow theme overall, so yellow fills the 4.00 cell, the CFA card and the contact panel under the declared committed posture */
+/* Hallmark · dismissed 70 · the "Get in touch" text it matched is page metadata, and the contact form states plainly that nothing is sent and opens the visitor's mail app */
+/* Hallmark · answered F7 · the round shapes are controls or true circles: the mobile pill nav, the round numerals, the timeline dots and the play button */
 
 /* ---------- Tokens ---------- */
 :root {
@@ -234,3 +236,107 @@ main { padding: var(--space-sm) var(--space-sm) var(--space-4xl); }
 @media (max-width: 40rem) { .foot-in { grid-template-columns: minmax(0, 1fr); padding: var(--space-lg); } }
 
 @media (prefers-reduced-motion: reduce) { .btn:hover { transform: none; } }
+
+/* ---------- Olympiad: photographs and the press moment ---------- */
+.head-aside { display: grid; gap: var(--space-md); justify-items: start; }
+.oly-photos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-md); align-items: start; }
+.oly-photo { margin: 0; display: grid; gap: var(--space-sm); }
+.oly-frame { overflow: hidden; aspect-ratio: 3 / 2; background: var(--color-paper-3); border-radius: var(--radius-card); }
+.oly-frame img { width: 100%; height: 100%; object-fit: cover; }
+.oly-photo:nth-child(2) .oly-frame img { object-position: 75% 40%; }
+.oly-photo figcaption { max-width: 48ch; padding-inline: var(--space-xs); color: var(--color-ink-2); }
+.press { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-lg); margin-top: var(--space-md); padding: var(--space-lg) var(--space-xl); background: var(--color-accent); color: var(--color-accent-ink); border-radius: var(--radius-card); }
+.press h3 { font-size: var(--text-xl); }
+.press p { max-width: 46ch; margin-top: var(--space-2xs); }
+.section-link { margin-top: var(--space-xl); }
+@media (max-width: 60rem) { .oly-photos { grid-template-columns: minmax(0, 1fr); } .press { padding: var(--space-lg); } }
+
+/* ---------- Inner pages (education, contact) ---------- */
+.page-top { padding-block: var(--space-2xl) 0; }
+.page-head { display: grid; gap: var(--space-md); margin-bottom: var(--space-2xl); }
+.page-head h1 { max-width: 16ch; }
+.page-head .lead { max-width: 44ch; color: var(--color-ink-2); }
+
+.edu-cards { display: grid; gap: var(--space-md); }
+.edu-card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: var(--space-xl); align-items: center; padding: var(--space-md); background: var(--color-paper-2); border-radius: var(--radius-panel); }
+.edu-card:nth-child(even) { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+.edu-card:nth-child(even) .edu-mark { order: 2; }
+.edu-mark { display: grid; place-items: center; aspect-ratio: 8 / 5; background: var(--color-paper-3); border-radius: var(--radius-card); font-family: var(--font-display); font-weight: 800; font-size: var(--text-display-s); letter-spacing: var(--tracking-display); line-height: 1; }
+.edu-mark--now { background: var(--color-accent); color: var(--color-accent-ink); }
+.edu-body { display: grid; gap: var(--space-xs); padding-inline: var(--space-md); }
+.edu-body h2 { font-size: var(--text-xl); max-width: 32ch; }
+.edu-inst { font-weight: 700; }
+.edu-period { font-size: var(--text-sm); color: var(--color-muted); }
+.edu-desc { color: var(--color-ink-2); max-width: 60ch; }
+.edu-link { width: fit-content; margin-top: var(--space-xs); font-weight: 700; }
+.edu-cta { display: grid; gap: var(--space-md); justify-items: start; margin-top: var(--space-2xl); padding: var(--space-xl); background: var(--color-paper-3); border-radius: var(--radius-panel); }
+.edu-cta h2 { font-size: var(--text-2xl); max-width: 22ch; }
+.edu-cta p { max-width: 52ch; color: var(--color-ink-2); }
+@media (max-width: 60rem) {
+  .edu-card, .edu-card:nth-child(even) { grid-template-columns: minmax(0, 1fr); gap: var(--space-md); }
+  .edu-card:nth-child(even) .edu-mark { order: 0; }
+  .edu-mark { aspect-ratio: 16 / 7; }
+  .edu-body { padding: 0 var(--space-xs) var(--space-xs); }
+}
+
+.contact-grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: var(--space-md); align-items: start; }
+.contact-list { display: grid; gap: var(--space-sm); }
+.contact-card { display: grid; gap: var(--space-xl); padding: var(--space-lg); background: var(--color-paper-2); border-radius: var(--radius-card); text-decoration: none; }
+a.contact-card:hover { background: var(--color-paper-3); }
+.contact-card--main { min-height: 220px; align-content: space-between; background: var(--color-accent); color: var(--color-accent-ink); }
+a.contact-card--main:hover { background: var(--color-accent); text-decoration: underline; text-decoration-thickness: var(--rule-bar); text-underline-offset: 0.12em; }
+.contact-card--main .cell-note { color: var(--color-accent-ink); }
+.contact-value { font-family: var(--font-display); font-weight: 800; font-size: var(--text-section); line-height: 1.05; letter-spacing: var(--tracking-display); overflow-wrap: anywhere; }
+.contact-value--sm { font-size: var(--text-xl); }
+.contact-form { display: grid; gap: var(--space-md); padding: var(--space-xl); background: var(--color-paper-2); border-radius: var(--radius-panel); }
+.contact-form h2 { font-size: var(--text-2xl); }
+.contact-form label { display: grid; gap: var(--space-xs); font-weight: 700; }
+.contact-form input, .contact-form textarea { width: 100%; min-height: 48px; padding: var(--space-sm) var(--space-md); font: inherit; font-weight: 400; color: var(--color-ink); background: var(--color-paper); border: var(--rule-bar) solid var(--color-rule); border-radius: var(--radius-control); }
+.contact-form textarea { min-height: 9rem; resize: vertical; }
+.contact-form input:focus-visible, .contact-form textarea:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; border-color: var(--color-ink); }
+.contact-form .btn { width: fit-content; }
+.form-note { font-size: var(--text-sm); color: var(--color-muted); }
+@media (max-width: 60rem) { .contact-grid { grid-template-columns: minmax(0, 1fr); } .contact-form { padding: var(--space-lg); } }
+.contact-card--main .contact-value { font-size: var(--text-2xl); overflow-wrap: normal; word-break: normal; }
+@media (max-width: 40rem) { .contact-card--main .contact-value { font-size: var(--text-lg); overflow-wrap: anywhere; } }
+
+.edu-mark--photo { position: relative; overflow: hidden; }
+.edu-mark--photo img { object-fit: cover; }
+.edu-credit { margin-top: var(--space-xs); font-size: var(--text-sm); color: var(--color-muted); max-width: 60ch; }
+.btn:disabled, .btn[aria-disabled="true"]:disabled, .contact-form input:disabled, .contact-form textarea:disabled { opacity: 0.55; cursor: not-allowed; }
+
+/* ---------- Click-to-play video ---------- */
+.press { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: var(--space-xl); padding: var(--space-xl); }
+.press-copy { display: grid; gap: var(--space-sm); justify-items: start; }
+.press-copy p { margin-top: 0; }
+.press-copy .btn { margin-top: var(--space-xs); }
+.video { position: relative; width: min(100%, 20rem); aspect-ratio: 9 / 16; overflow: hidden; background: var(--color-ink); border-radius: var(--radius-card); }
+.video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.video-poster { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: var(--space-md); width: 100%; border: 0; padding: var(--space-lg); background: var(--color-ink); color: var(--color-paper); font-weight: 700; text-align: center; cursor: pointer; }
+.video-play { display: grid; place-items: center; width: 5rem; height: 5rem; background: var(--color-accent); color: var(--color-accent-ink); border-radius: var(--radius-pill); transition: transform var(--dur-short) var(--ease-out); }
+.video-play svg { width: 2rem; height: 2rem; fill: currentColor; margin-left: var(--space-2xs); }
+.video-poster:hover .video-play { transform: scale(1.08); }
+.video-poster:focus-visible { outline: 3px solid var(--color-focus); outline-offset: -6px; }
+@media (max-width: 60rem) { .press { grid-template-columns: minmax(0, 1fr); padding: var(--space-lg); } .video { justify-self: center; } }
+@media (prefers-reduced-motion: reduce) { .video-poster:hover .video-play { transform: none; } }
+.video { width: 20rem; max-width: 100%; }
+
+:root { --color-badge: oklch(91.5% 0.002 260); }
+.edu-mark--badge { background: var(--color-badge); }
+.edu-mark--badge img { object-fit: contain; padding: var(--space-sm); }
+a.cred { text-decoration: none; }
+a.cred:hover { text-decoration: none; }
+a.cred--yellow:hover { background: var(--color-accent); }
+.cred-link { font-size: var(--text-sm); font-weight: 700; text-decoration: underline; text-underline-offset: 0.16em; }
+a.cred:hover .cred-link { text-decoration-thickness: 2px; }
+
+/* ---------- In the news ---------- */
+.news { display: grid; gap: var(--space-md); margin-top: var(--space-xl); }
+.news h3 { font-size: var(--text-xl); }
+.news-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-sm); }
+.news-card { display: grid; gap: var(--space-sm); align-content: space-between; height: 100%; padding: var(--space-lg); background: var(--color-paper-2); border-radius: var(--radius-card); text-decoration: none; transition: background-color var(--dur-short) var(--ease-out); }
+.news-card:hover { background: var(--color-paper-3); }
+.news-title { font-family: var(--font-display); font-weight: 800; font-size: var(--text-lg); line-height: 1.2; letter-spacing: var(--tracking-display); }
+.news-card:hover .news-title { text-decoration: underline; text-underline-offset: 0.16em; }
+.news-meta { font-size: var(--text-sm); color: var(--color-muted); }
+@media (max-width: 60rem) { .news-list { grid-template-columns: minmax(0, 1fr); } }

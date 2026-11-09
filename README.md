@@ -22,7 +22,7 @@ Financial modeling, corporate finance, econometric research and financial inclus
 - **Fast by default.** Self-hosted fonts through `next/font`, an optimised hero image through `next/image`, and one small client component.
 - **Cream and yellow design.** Rounded panels, a left sidebar on desktop, a floating pill nav on mobile, and dot-and-line timelines.
 - **Edit one file.** All content lives in [`app/data.ts`](app/data.ts).
-- **SEO ready.** Metadata, Open Graph image, sitemap, robots and JSON-LD `Person` data.
+- **SEO and LLM ready.** Per-page metadata and canonicals, Open Graph image, sitemap, robots (AI crawlers allowed), web manifest, JSON-LD (`Person`, `ProfilePage`, breadcrumbs), plus `/llms.txt` and `/llms-full.txt` generated from `app/data.ts`.
 
 ## Structure
 
@@ -32,8 +32,11 @@ app/
   layout.tsx        fonts, metadata, navigation
   page.tsx          every section, server-rendered
   globals.css       design tokens and styles
-  components/       Nav, Timeline, CvButton, Icon, ActiveNav
-public/             hero photograph and social preview image
+  education/, contact/   separate pages
+  components/       Nav, Footer, Timeline, CvButton, Icon, ActiveNav
+  seo.ts, llms.ts   shared metadata helpers and the llms.txt text
+  robots.ts, sitemap.ts, manifest.ts, llms.txt/, llms-full.txt/
+public/             compressed photographs (WebP) and the social preview image
 ```
 
 ## Getting started
@@ -54,7 +57,8 @@ npm start            # serve the build
 | --- | --- |
 | Enable the CV button | Put the PDF in `public/` and set `cvUrl` in `app/data.ts` |
 | Replace the sample projects | `projects.items` in `app/data.ts` |
-| Set the canonical domain | `NEXT_PUBLIC_SITE_URL` in Vercel (optional) |
+| Set the canonical domain | `NEXT_PUBLIC_SITE_URL` in Vercel (optional; link previews need an absolute URL, which Vercel supplies) |
+| Refresh the link-preview image | Run `npm run og` (writes `public/og.jpg`, 1200×630) |
 
 ## Deploy
 

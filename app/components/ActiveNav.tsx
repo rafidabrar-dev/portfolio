@@ -1,16 +1,18 @@
 'use client';
 
 import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 /**
- * Renders nothing. Marks the current section's link in the sidebar and the mobile pill.
- * The links themselves are server-rendered, so the page works without this script.
+ * Renders nothing. Marks the current page or section in the sidebar and the mobile pill.
+ * The links themselves are server-rendered, so navigation works without this script.
  */
 export default function ActiveNav() {
+  const pathname = usePathname();
+
   useEffect(() => {
     const links = Array.from(document.querySelectorAll<HTMLElement>('[data-nav]'));
-    const sections = Array.from(document.querySelectorAll<HTMLElement>('main section[id]'));
-    if (!links.length || !sections.length) return;
+    if (!links.length) return;
 
     const setActive = (id: string) => {
       // Sections with no nav link (like the focus rows) keep the previous highlight instead of clearing it.
@@ -23,6 +25,14 @@ export default function ActiveNav() {
       }
     };
 
+    // Separate pages: highlight by route.
+    if (pathname !== '/') {
+      setActive(pathname.replace(/^\//, '').split('/')[0]);
+      return;
+    }
+
+    // Home: highlight by the section in view.
+    const sections = Array.from(document.querySelectorAll<HTMLElement>('main section[id]'));
     const io = new IntersectionObserver(
       (entries) => {
         for (const en of entries) if (en.isIntersecting) setActive(en.target.id);
@@ -42,7 +52,7 @@ export default function ActiveNav() {
       io.disconnect();
       window.removeEventListener('scroll', onScroll);
     };
-  }, []);
+  }, [pathname]);
 
   return null;
 }
