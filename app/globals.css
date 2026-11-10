@@ -368,3 +368,4 @@ a.cred:hover .cred-link { text-decoration-thickness: 2px; }
 .video-poster .video-label { position: absolute; z-index: 1; left: var(--space-md); bottom: var(--space-md); padding: var(--space-xs) var(--space-md); background: var(--color-ink); color: var(--color-paper); border-radius: var(--radius-pill); font-size: var(--text-sm); }
 .news-mention { color: var(--color-ink-2); font-size: var(--text-sm); }
 @media (max-width: 60rem) { .press { grid-template-columns: minmax(0, 1fr); } }
+.foot-heart { display: inline-block; width: 1em; height: 1em; vertical-align: -0.14em; fill: color-mix(in oklab, var(--color-error) 70%, var(--color-muted)); }

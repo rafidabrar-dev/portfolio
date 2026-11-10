@@ -55,7 +55,11 @@ export default function Footer() {
         </div>
       </div>
       <p className="foot-credit">
-        Made by Choto bhai{' '}
+        Made with Love{' '}
+        <svg className="foot-heart" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 2.7 4.5 6.3 4.5c2 0 3.6 1.1 4.5 2.7h2.4c.9-1.6 2.5-2.7 4.5-2.7 3.6 0 5.4 3.9 3.9 7.3C19.5 16.4 12 21 12 21z" />
+        </svg>{' '}
+        by Choto bhai{' '}
         <a href="https://shahoriar.bd" target="_blank" rel="noopener">
           Shahoriar
         </a>
