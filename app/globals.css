@@ -97,7 +97,7 @@ a:not(.btn):hover { text-decoration-thickness: 2px; }
     background: var(--color-paper-2); border: var(--rule-hair) solid var(--color-rule); border-radius: var(--radius-panel);
     overflow-y: auto;
   }
-  main { margin-left: calc(var(--side-w) + var(--space-lg) + var(--space-md)); }
+  .shell { margin-left: calc(var(--side-w) + var(--space-lg) + var(--space-md)); }
 }
 .brand { display: block; padding: var(--space-sm) var(--space-md); text-decoration: none; background: var(--color-paper); border: var(--rule-hair) solid var(--color-rule); border-radius: var(--radius-card); }
 .brand-sub { display: block; font-size: var(--text-sm); color: var(--color-muted); }
@@ -123,8 +123,9 @@ a:not(.btn):hover { text-decoration-thickness: 2px; }
 @media (min-width: 60rem) { .dock { display: none; } }
 
 /* ---------- Layout shell ---------- */
-main { padding: var(--space-sm) var(--space-sm) var(--space-4xl); }
-@media (min-width: 60rem) { main { padding: var(--space-md) var(--space-md) var(--space-3xl) 0; } }
+/* The shell holds <main> and the footer; the footer is a sibling of <main>, so it is a true contentinfo landmark. */
+.shell { padding: var(--space-sm) var(--space-sm) var(--space-4xl); }
+@media (min-width: 60rem) { .shell { padding: var(--space-md) var(--space-md) var(--space-3xl) 0; } }
 
 /* ---------- Hero: the photograph fills the panel ---------- */
 .hero { display: grid; gap: var(--space-lg); }
@@ -349,3 +350,21 @@ a.cred:hover .cred-link { text-decoration-thickness: 2px; }
 /* Mobile pill: each item is at least as wide as its label, so the yellow highlight always contains the text. */
 .dock a { flex: 1 1 auto; min-width: max-content; padding-inline: var(--space-2xs); white-space: nowrap; }
 @media (max-width: 22.5rem) { .dock a { font-size: 0.6875rem; } .dock { gap: var(--space-3xs); } }
+
+.foot-legal + .foot-legal { margin-top: var(--space-2xs); }
+
+/* ---------- Footer credit: quiet, at the very bottom ---------- */
+.foot-credit { margin-top: var(--space-lg); text-align: center; font-size: var(--text-sm); color: color-mix(in oklab, var(--color-muted) 82%, var(--color-paper)); }
+.foot-credit a { color: inherit; text-decoration-thickness: 1px; }
+.foot-credit a:hover { color: var(--color-ink); }
+
+/* ---------- Press: wide 16:9 YouTube poster beside the copy ---------- */
+.press { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: center; }
+.press .video { width: 100%; aspect-ratio: 16 / 9; }
+.press-title { font-weight: 700; line-height: 1.35; }
+.press-credit { font-size: var(--text-sm); }
+.video-poster img { object-fit: cover; }
+.video-poster .video-play { position: relative; z-index: 1; }
+.video-poster .video-label { position: absolute; z-index: 1; left: var(--space-md); bottom: var(--space-md); padding: var(--space-xs) var(--space-md); background: var(--color-ink); color: var(--color-paper); border-radius: var(--radius-pill); font-size: var(--text-sm); }
+.news-mention { color: var(--color-ink-2); font-size: var(--text-sm); }
+@media (max-width: 60rem) { .press { grid-template-columns: minmax(0, 1fr); } }

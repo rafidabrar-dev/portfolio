@@ -13,6 +13,9 @@ export const site = {
   facebook: 'https://www.facebook.com/rafidabrar.bd/',
   // Leave empty until the CV exists. Put the PDF in /public and set e.g. '/Rafid-Abrar-CV.pdf'.
   cvUrl: '',
+  // Bump this when the content changes. It feeds the sitemap, structured data and the footer, so crawlers
+  // see a real change date instead of a new date on every deploy.
+  updated: '2026-11-10',
   location: 'Dhaka, Bangladesh',
   url:
     process.env.NEXT_PUBLIC_SITE_URL ??
@@ -54,24 +57,33 @@ export const olympiad = {
         'As part of the nationwide outreach for the Bangladesh Economics Olympiad 2026, leading the Student Activation Program at Presidency University.',
     },
   ],
+  // Press coverage that names Rafid Abrar.
   news: [
     {
-      title: 'Bangladeshi prodigy shines bright at International Economics Olympiad 2024, Hong Kong',
-      source: 'The Business Standard',
-      date: '31 July 2024',
-      url: 'https://www.tbsnews.net/economy/corporates/bangladeshi-prodigy-shines-bright-international-economics-olympiad-2024-hong-kong',
-    },
-    {
-      title: 'Bangladesh Economics Olympiad 2023 National Team Selection Camp commences',
-      source: 'The Business Standard',
-      date: '24 June 2023',
-      url: 'https://www.tbsnews.net/economy/corporates/bangladesh-economics-olympiad-2023-national-team-selection-camp-commences-655282',
+      title: 'Bangladeshi students shine at Int\u2019l Economics Olympiad in China',
+      source: 'New Age',
+      section: 'Campus Bites',
+      date: '23 July 2026',
+      isoDate: '2026-07-23',
+      mention: 'Names Rafid Abrar as deputy team leader of the Bangladesh team.',
+      url: 'https://www.newagebd.net/post/campus-bites/307267/bangladeshi-students-shine-at-intl-economics-olympiad-in-china',
     },
   ],
+  // The BTV appearance, from the official Bangladesh Television YouTube channel.
   press: {
     heading: 'On national television.',
-    body: 'Representing the Bangladesh Economics Olympiad on BTV, the national television of Bangladesh.',
-    url: 'https://www.facebook.com/reel/712353808579980',
+    body: 'Rafid Abrar speaks on BTV, the national television of Bangladesh, about the Bangladesh Economics Olympiad: its activities, achievements and goals.',
+    video: {
+      id: 'sV5vpmozrCk',
+      title: 'বাংলাদেশ ইকোনমিকস অলিম্পিয়াড: কার্যক্রম, অর্জন ও লক্ষ্য',
+      titleEn: 'Bangladesh Economics Olympiad: activities, achievements and goals',
+      channel: 'Bangladesh Television (BTV)',
+      uploadDate: '2025-11-29',
+      duration: 'PT7M10S',
+      thumbnail: '/btv-economics-olympiad.webp',
+      watchUrl: 'https://www.youtube.com/watch?v=sV5vpmozrCk',
+      embedUrl: 'https://www.youtube.com/embed/sV5vpmozrCk',
+    },
   },
 };
 

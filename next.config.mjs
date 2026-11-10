@@ -13,7 +13,17 @@ const nextConfig = {
 
   // Browsers ask for /favicon.ico by default; serve the one from the pack.
   async rewrites() {
-    return [{ source: '/favicon.ico', destination: '/favicon/favicon.ico' }];
+    // Agents that send "Accept: text/markdown" get the Markdown version of the same page.
+    const markdown = [{ type: 'header', key: 'accept', value: '(.*)text/markdown(.*)' }];
+    return {
+      beforeFiles: [
+        { source: '/', has: markdown, destination: '/index.md' },
+        { source: '/education', has: markdown, destination: '/education.md' },
+        { source: '/contact', has: markdown, destination: '/contact.md' },
+      ],
+      afterFiles: [{ source: '/favicon.ico', destination: '/favicon/favicon.ico' }],
+      fallback: [],
+    };
   },
 
   async headers() {
@@ -30,6 +40,8 @@ const nextConfig = {
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
         ],
       },
+      // The same URL can return HTML or Markdown depending on the Accept header.
+      ...['/', '/education', '/contact'].map((source) => ({ source, headers: [{ key: 'Vary', value: 'Accept' }] })),
       {
         // Static files in /public that never change name: cache hard at the edge and the browser.
         source: '/rafid_hero.webp',

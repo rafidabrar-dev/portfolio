@@ -3,8 +3,8 @@ import { Bricolage_Grotesque, DM_Sans } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { site } from './data';
 import { Sidebar, Dock } from './components/Nav';
-import { ogImage } from './seo';
-import Footer from './components/Footer';
+import { alternatesFor, ogImage } from './seo';
+import Footer from '@/components/Footer';
 import './globals.css';
 
 // Self-hosted at build time by next/font: no render-blocking request to Google, no layout shift.
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   description: site.description,
   applicationName: site.name,
   authors: [{ name: site.name, url: site.linkedin }],
-  alternates: { canonical: '/' },
+  alternates: alternatesFor('/', '/index.md'),
   icons: {
     icon: [
       { url: '/favicon/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
@@ -37,7 +37,9 @@ export const metadata: Metadata = {
     apple: [{ url: '/favicon/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
   },
   openGraph: {
-    type: 'website',
+    type: 'profile',
+    firstName: 'Rafid',
+    lastName: 'Abrar',
     siteName: site.name,
     title: site.title,
     description: site.shareDescription,
@@ -46,7 +48,18 @@ export const metadata: Metadata = {
     images: [ogImage],
   },
   twitter: { card: 'summary_large_image', title: site.title, description: site.shareDescription, images: [ogImage.url] },
-  robots: { index: true, follow: true },
+  keywords: ['Rafid Abrar', 'finance', 'financial modeling', 'corporate finance', 'econometrics', 'financial inclusion', 'Bangladesh Economics Olympiad', 'Dhaka'],
+  // Allow full-size image previews and unrestricted snippets in search and AI answers.
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
+  },
+  // Search Console and Bing Webmaster verification: set these in Vercel when you add the property.
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+    other: process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION ? { 'msvalidate.01': process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION } : undefined,
+  },
 };
 
 export const viewport: Viewport = {
@@ -64,10 +77,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <Sidebar />
         <Dock />
-        <main id="main">
-          {children}
+        <div className="shell">
+          <main id="main">{children}</main>
           <Footer />
-        </main>
+        </div>
         <Analytics />
       </body>
     </html>

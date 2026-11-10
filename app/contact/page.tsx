@@ -1,22 +1,23 @@
 import { site } from '../data';
-import { breadcrumbLd, pageMetadata } from '../seo';
+import { breadcrumbLd, pageMetadata, webPageLd } from '../seo';
 
 export const metadata = pageMetadata({
-  title: 'Contact',
+  title: 'Contact Rafid Abrar, finance graduate in Dhaka',
+  absoluteTitle: true,
   description:
     'Get in touch with Rafid Abrar about financial modeling, research, private sector development and financial inclusion.',
   path: '/contact',
+  markdownPath: '/contact.md',
 });
 
 const jsonLd = [
   breadcrumbLd([{ name: 'Contact', path: '/contact' }]),
-  {
-    '@context': 'https://schema.org',
-    '@type': 'ContactPage',
+  webPageLd({
+    type: 'ContactPage',
     name: `Contact ${site.name}`,
-    url: `${site.url}/contact`,
-    mainEntity: { '@type': 'Person', name: site.name, email: site.email },
-  },
+    path: '/contact',
+    description: 'Email, LinkedIn and Facebook for Rafid Abrar.',
+  }),
 ];
 
 export default function ContactPage() {

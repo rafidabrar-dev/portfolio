@@ -1,16 +1,25 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { educationPage } from '../data';
-import { breadcrumbLd, pageMetadata } from '../seo';
+import { breadcrumbLd, pageMetadata, webPageLd } from '../seo';
 
 export const metadata = pageMetadata({
   title: 'Education and academic qualifications',
   description:
     'Academic background of Rafid Abrar: MBA and BBA in Finance and Banking at BUP, Notre Dame College, Govt. Laboratory High School Rajshahi and CFA Level I.',
   path: '/education',
+  markdownPath: '/education.md',
 });
 
-const jsonLd = breadcrumbLd([{ name: 'Education', path: '/education' }]);
+const jsonLd = [
+  breadcrumbLd([{ name: 'Education', path: '/education' }]),
+  webPageLd({
+    type: 'AboutPage',
+    name: 'Education and academic qualifications',
+    path: '/education',
+    description: 'Academic background and qualifications of Rafid Abrar.',
+  }),
+];
 
 export default function EducationPage() {
   return (

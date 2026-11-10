@@ -1,17 +1,18 @@
 import Image from 'next/image';
 import { about, cfaCredentialUrl, experience, focus, hero, olympiad, projects, site } from './data';
 import CvButton from './components/CvButton';
+import { ids } from './seo';
 import Timeline from './components/Timeline';
 import VideoEmbed from './components/VideoEmbed';
 
 // Structured data: a WebSite and a ProfilePage whose main entity is the Person.
-const personId = `${site.url}/#person`;
+const personId = ids.person;
 const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
     {
       '@type': 'WebSite',
-      '@id': `${site.url}/#website`,
+      '@id': ids.website,
       url: site.url,
       name: site.name,
       description: site.description,
@@ -23,7 +24,9 @@ const jsonLd = {
       '@id': `${site.url}/#profile`,
       url: site.url,
       name: site.title,
-      isPartOf: { '@id': `${site.url}/#website` },
+      isPartOf: { '@id': ids.website },
+      dateModified: site.updated,
+      inLanguage: 'en',
       mainEntity: { '@id': personId },
     },
     {
@@ -55,8 +58,39 @@ const jsonLd = {
         credentialCategory: 'Exam passed',
         url: cfaCredentialUrl,
       },
-      worksFor: { '@type': 'Organization', name: 'Bangladesh Economics Olympiad', url: 'https://ecolympbd.org' },
-      sameAs: [site.linkedin, site.facebook, olympiad.committeeUrl],
+      worksFor: [
+        { '@type': 'Organization', name: 'Bangladesh Economics Olympiad', url: 'https://ecolympbd.org' },
+        { '@type': 'CollegeOrUniversity', name: 'Bangladesh University of Professionals', url: 'https://bup.edu.bd' },
+      ],
+      sameAs: [site.linkedin, site.facebook, 'https://alumni.bup.edu.bd/student-profile/1080', olympiad.committeeUrl],
+      subjectOf: [{ '@id': `${site.url}/#btv-video` }, { '@id': `${site.url}/#press-new-age` }],
+    },
+    {
+      '@type': 'VideoObject',
+      '@id': `${site.url}/#btv-video`,
+      name: olympiad.press.video.title,
+      alternateName: olympiad.press.video.titleEn,
+      description: `${olympiad.press.body} Published by ${olympiad.press.video.channel} on YouTube.`,
+      thumbnailUrl: `${site.url}${olympiad.press.video.thumbnail}`,
+      uploadDate: olympiad.press.video.uploadDate,
+      duration: olympiad.press.video.duration,
+      embedUrl: olympiad.press.video.embedUrl,
+      contentUrl: olympiad.press.video.watchUrl,
+      inLanguage: 'bn',
+      publisher: { '@type': 'Organization', name: olympiad.press.video.channel, url: 'https://www.youtube.com/@bangladeshtelevisionnews' },
+      about: { '@id': personId },
+      isFamilyFriendly: true,
+    },
+    {
+      '@type': 'NewsArticle',
+      '@id': `${site.url}/#press-new-age`,
+      headline: olympiad.news[0].title,
+      url: olympiad.news[0].url,
+      datePublished: olympiad.news[0].isoDate,
+      inLanguage: 'en',
+      articleSection: olympiad.news[0].section,
+      publisher: { '@type': 'NewsMediaOrganization', name: olympiad.news[0].source, url: 'https://www.newagebd.net' },
+      mentions: { '@id': personId },
     },
   ],
 };
@@ -154,14 +188,20 @@ export default function Home() {
             <div className="press-copy">
               <h3>{olympiad.press.heading}</h3>
               <p>{olympiad.press.body}</p>
-              <a className="btn btn--ink" href={olympiad.press.url} target="_blank" rel="noopener noreferrer">
-                Open on Facebook
+              <p className="press-title" lang="bn">
+                {olympiad.press.video.title}
+              </p>
+              <p className="press-credit">{olympiad.press.video.channel}</p>
+              <a className="btn btn--ink" href={olympiad.press.video.watchUrl} target="_blank" rel="noopener noreferrer">
+                Watch on YouTube
               </a>
             </div>
             <VideoEmbed
-              url={olympiad.press.url}
-              title="Rafid Abrar on BTV for the Bangladesh Economics Olympiad"
-              label="Watch the BTV appearance"
+              id={olympiad.press.video.id}
+              title={olympiad.press.video.title}
+              thumbnail={olympiad.press.video.thumbnail}
+              thumbnailAlt={`${site.name} speaking on BTV about the Bangladesh Economics Olympiad`}
+              label="Play the BTV appearance"
             />
           </div>
           <div className="news">
@@ -171,8 +211,9 @@ export default function Home() {
                 <li key={n.url}>
                   <a className="news-card" href={n.url} target="_blank" rel="noopener noreferrer">
                     <span className="news-title">{n.title}</span>
+                    <span className="news-mention">{n.mention}</span>
                     <span className="news-meta">
-                      {n.source}, {n.date}
+                      {n.source}, {n.section}, <time dateTime={n.isoDate}>{n.date}</time>
                     </span>
                   </a>
                 </li>

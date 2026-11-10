@@ -58,7 +58,16 @@ npm start            # serve the build
 | Enable the CV button | Put the PDF in `public/` and set `cvUrl` in `app/data.ts` |
 | Replace the sample projects | `projects.items` in `app/data.ts` |
 | Set the canonical domain | `NEXT_PUBLIC_SITE_URL` in Vercel (optional; link previews need an absolute URL, which Vercel supplies) |
+| Verify Search Console and Bing | Set `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` and `NEXT_PUBLIC_BING_SITE_VERIFICATION` in Vercel (the tags appear automatically) |
+| Bump the content date | Change `site.updated` in `app/data.ts` when content changes (feeds sitemap, JSON-LD, footer) |
 | Refresh the link-preview image | Run `npm run og` (writes `public/og.jpg`, 1200×630) |
+
+## For crawlers and LLMs
+
+- `/robots.txt` allows search and AI crawlers; `/sitemap.xml` lists the three pages.
+- `/llms.txt` (index) and `/llms-full.txt` (everything) are generated from `app/data.ts`.
+- Every page is also Markdown: `/index.md`, `/education.md`, `/contact.md`, or the normal URL with `Accept: text/markdown`.
+- Each page links its Markdown and `llms.txt` with `<link rel="alternate">`; JSON-LD ties pages to one `Person` entity.
 
 ## Deploy
 
